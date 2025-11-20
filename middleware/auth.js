@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'tu_clave_secreta_aqui'; // La misma clave secreta
+const JWT_SECRET = 'tu_clave_secreta_aqui';
 
 module.exports = function(req, res, next) {
     const token = req.header('x-auth-token');
@@ -8,8 +8,12 @@ module.exports = function(req, res, next) {
     }
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        req.usuario = decoded.usuario;
-        next(); // Deja pasar a la siguiente función (la ruta protegida)
+
+        // --- CAMBIO CLAVE: GUARDAMOS TODO EL OBJETO USUARIO ---
+        req.usuario = decoded.usuario; // req.usuario ahora contiene id y isInstitutional
+        // ------------------------------------------------------
+
+        next(); 
     } catch (err) {
         res.status(401).json({ msg: 'Token no válido' });
     }

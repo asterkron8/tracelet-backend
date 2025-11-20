@@ -14,6 +14,12 @@ const UsuarioSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    // --- CAMBIO AÑADIDO ---
+    isInstitutional: { 
+        type: Boolean,
+        default: false // La mayoría serán usuarios normales
+    },
+    // ----------------------
     fechaRegistro: {
         type: Date,
         default: Date.now
